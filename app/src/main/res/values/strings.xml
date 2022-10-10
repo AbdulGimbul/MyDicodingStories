@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyDicodingStories</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="account_name">Nama Akun</string>
+    <string name="story">Cerita</string>
+    <string name="writer">Penulis :</string>
+    <string name="description">Deskripsi :</string>
+    <string name="camera_x">CameraX</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="title_activity_maps_story">MapsStoryActivity</string>
+    <string name="normal_type">Tipe Normal</string>
+    <string name="hybrid_type">Tipe Hybrid</string>
+</resources>

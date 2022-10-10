@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.0"
+            android:textColor="@android:color/black"
+            tools:text="@string/account_name" />
+
+        <TextView
+            android:id="@+id/tv_item_story"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:justificationMode="inter_word"
+            android:maxLines="5"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="@id/tv_item_name"
+            card_view:layout_constraintStart_toStartOf="@id/tv_item_name"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_item_name"
+            card_view:layout_constraintVertical_bias="0.0"
+            tools:text="@string/story"
+            />
+
+        <ImageView
+            android:id="@+id/picture_feed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="4dp"
+            card_view:layout_constraintBottom_toTopOf="@id/tv_like"
+            card_view:layout_constraintEnd_toEndOf="@id/tv_item_story"
+            card_view:layout_constraintStart_toStartOf="@id/tv_item_story"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_item_story"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Like"
+            android:textColor="@color/blue_cyan"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@id/tv_comments"
+            card_view:layout_constraintStart_toStartOf="@id/tv_item_story"
+            card_view:layout_constraintTop_toBottomOf="@id/picture_feed"
+            card_view:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments"
+            android:textColor="@color/blue_cyan"
+            card_view:layout_constraintBottom_toBottomOf="@id/tv_like"
+            card_view:layout_constraintEnd_toStartOf="@id/tv_share"
+            card_view:layout_constraintStart_toEndOf="@id/tv_like"
+            card_view:layout_constraintTop_toTopOf="@id/tv_like"
+            card_view:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share"
+            android:textColor="@color/blue_cyan"
+            card_view:layout_constraintBottom_toBottomOf="@id/tv_like"
+            card_view:layout_constraintEnd_toEndOf="@id/tv_item_story"
+            card_view:layout_constraintStart_toEndOf="@id/tv_comments"
+            card_view:layout_constraintTop_toTopOf="@id/tv_like"
+            card_view:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
