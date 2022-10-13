@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityRegisterBinding
 import com.abdl.mydicodingstories.utils.SessionManager
 import com.abdl.mydicodingstories.utils.ViewModelFactory
@@ -20,9 +21,13 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
         loginViewModel =
-            ViewModelProvider(this, ViewModelFactory(session, this))[LoginViewModel::class.java]
+            ViewModelProvider(
+                this,
+                ViewModelFactory(session, apiService)
+            )[LoginViewModel::class.java]
 
         binding.btnRegister.setOnClickListener {
             registerUser()

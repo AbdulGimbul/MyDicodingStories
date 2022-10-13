@@ -9,24 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.databinding.ItemStoryBinding
-import com.abdl.mydicodingstories.utils.StoryDiffCallback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemViewHolder>(
     DIFF_CALLBACK
 ) {
-    private val listStory = ArrayList<ListStoryItem>()
     private var onItemClickCallback: OnItemClickCallback? = null
 
-    fun setData(items: List<ListStoryItem>) {
-        val diffCallback = StoryDiffCallback(listStory, items)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        listStory.clear()
-        listStory.addAll(items)
-        diffResult.dispatchUpdatesTo(this)
-        Log.d("ItemStoryAdapter", "cek list : $listStory")
-    }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback?) {
         this.onItemClickCallback = onItemClickCallback
@@ -39,21 +29,15 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-//        holder.bind(listStory[position])
         val data = getItem(position)
-        if (data != null){
+        if (data != null) {
             holder.bind(data)
         }
 
         holder.itemView.setOnClickListener {
-            onItemClickCallback?.onItemClicked(listStory[holder.adapterPosition])
+            onItemClickCallback?.onItemClicked(data)
         }
     }
-
-//    override fun getItemCount(): Int {
-//        Log.d("ItemStoryAdapter", "cek jumlah item : ${listStory.size}")
-//        return listStory.size
-//    }
 
     class ItemViewHolder(private val itemBinding: ItemStoryBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -63,13 +47,16 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
                 Log.d("ItemStoryAdapter", "cek item : ${item.name}")
                 tvItemStory.text = item.description
                 tvLike.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 tvComments.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 tvShare.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 Glide.with(itemBinding.root)
@@ -96,6 +83,6 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ListStoryItem)
+        fun onItemClicked(data: ListStoryItem?)
     }
 }

@@ -22,15 +22,15 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintVertical_bias="0.0"
-            android:textColor="@android:color/black"
             tools:text="@string/account_name" />
 
         <TextView
@@ -46,16 +46,15 @@
             card_view:layout_constraintStart_toStartOf="@id/tv_item_name"
             card_view:layout_constraintTop_toBottomOf="@id/tv_item_name"
             card_view:layout_constraintVertical_bias="0.0"
-            tools:text="@string/story"
-            />
+            tools:text="@string/story" />
 
         <ImageView
             android:id="@+id/picture_feed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
             android:layout_marginBottom="4dp"
+            android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toTopOf="@id/tv_like"
             card_view:layout_constraintEnd_toEndOf="@id/tv_item_story"
             card_view:layout_constraintStart_toStartOf="@id/tv_item_story"

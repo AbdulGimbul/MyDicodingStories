@@ -106,10 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:drawablePadding="4dp"
-                app:icon="@drawable/ic_baseline_map_24"
                 android:text="Peta Cerita"
                 android:textAllCaps="false"
                 android:textColor="@color/light_blue"
+                app:icon="@drawable/ic_baseline_map_24"
                 app:layout_constraintBottom_toBottomOf="@id/btn_add_story"
                 app:layout_constraintStart_toEndOf="@id/btn_add_story"
                 app:strokeColor="@color/light_blue"
@@ -136,10 +136,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_header"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_story" />
 
     <ProgressBar

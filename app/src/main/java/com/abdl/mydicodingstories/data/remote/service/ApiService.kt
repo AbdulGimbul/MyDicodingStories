@@ -1,6 +1,9 @@
 package com.abdl.mydicodingstories.data.remote.service
 
-import com.abdl.mydicodingstories.data.remote.response.*
+import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
+import com.abdl.mydicodingstories.data.remote.response.LoginResponse
+import com.abdl.mydicodingstories.data.remote.response.RegisterResponse
+import com.abdl.mydicodingstories.data.remote.response.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityAddStoryBinding
 import com.abdl.mydicodingstories.utils.SessionManager
 import com.abdl.mydicodingstories.utils.ViewModelFactory
@@ -36,9 +37,13 @@ class AddStoryActivity : AppCompatActivity() {
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
         mainViewModel =
-            ViewModelProvider(this, ViewModelFactory(session, this))[MainViewModel::class.java]
+            ViewModelProvider(
+                this,
+                ViewModelFactory(session, apiService)
+            )[MainViewModel::class.java]
 
 
         if (!allPermissionGranted()) {

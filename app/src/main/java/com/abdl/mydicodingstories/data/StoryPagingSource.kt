@@ -6,9 +6,9 @@ import androidx.paging.PagingState
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiService
 
-class StoryPagingSource(private val apiService: ApiService): PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
 
-    private companion object{
+    private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
 
@@ -31,7 +31,7 @@ class StoryPagingSource(private val apiService: ApiService): PagingSource<Int, L
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
                 nextKey = if (responseData.listStory.isNullOrEmpty()) null else position + 1
             )
-        } catch (e: Exception){
+        } catch (e: Exception) {
             return LoadResult.Error(e)
         }
     }

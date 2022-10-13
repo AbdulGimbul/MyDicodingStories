@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdl.mydicodingstories.adapter.ItemStoryAdapter
 import com.abdl.mydicodingstories.adapter.LoadingStateAdapter
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
+import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMainBinding
 import com.abdl.mydicodingstories.ui.login.LoginActivity
 import com.abdl.mydicodingstories.ui.maps.MapsStoryActivity
@@ -32,9 +33,13 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter = ItemStoryAdapter()
 
+        val apiService = ApiConfig.getApiService(this)
         session = SessionManager(this)
         mainViewModel =
-            ViewModelProvider(this, ViewModelFactory(session, this))[MainViewModel::class.java]
+            ViewModelProvider(
+                this,
+                ViewModelFactory(session, apiService)
+            )[MainViewModel::class.java]
 
 //        mainViewModel.listStory.observe(this) {
 //            rvAdapter.setData(it)
@@ -106,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSelectedStory() {
         rvAdapter.setOnItemClickCallback(object : ItemStoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: ListStoryItem) {
+            override fun onItemClicked(data: ListStoryItem?) {
                 val toDetailStory = Intent(this@MainActivity, DetailStoryActivity::class.java)
                 toDetailStory.putExtra(DetailStoryActivity.EXTRA_STORY, data)
 

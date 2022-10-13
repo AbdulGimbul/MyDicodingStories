@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityLoginBinding
 import com.abdl.mydicodingstories.ui.MainActivity
 import com.abdl.mydicodingstories.utils.SessionManager
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
+        val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
         if (session.fetchAuthToken() != null) {
             Intent(this@LoginActivity, MainActivity::class.java).also {
@@ -33,7 +35,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel =
-            ViewModelProvider(this, ViewModelFactory(session, this))[LoginViewModel::class.java]
+            ViewModelProvider(
+                this,
+                ViewModelFactory(session, apiService)
+            )[LoginViewModel::class.java]
 
         binding.btnLogin.setOnClickListener {
             loginUser()

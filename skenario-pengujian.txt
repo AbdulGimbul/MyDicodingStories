@@ -1,0 +1,35 @@
+//Skenario LoginViewModel: (Unit Test)
+
+	# Ketika berhasil login
+		- Memastikan data tidak null
+		- Memastikan data sesuai dengan yang diharapkan
+
+	# Ketika gagal login
+		- Memastikan error message tidak null
+		- Memastikan error message sesuai dengan yang diharapkan
+
+	# Ketika berhasil registrasi
+		- Memastikan data tidak null
+		- Memastikan data sesuai dengan yang diharapkan
+
+	# Ketika gagal registrasi
+		- Memastikan error message tidak null
+		- Memastikan error message sesuai dengan yang diharapkan
+
+//Skenario MainViewModel: (Unit Test)
+	
+	# Ketika berhasil memuat data story dari internet
+		- Memastikan data tidak null
+		- Memastikan jumlah data sesuai dengan yang diharapkan
+	
+	# Ketika gagal memuat data story
+		- Memastikan error message tidak null
+		- Memastikan mengembalikan error bernilai true
+
+	# Ketika berhasil menambahkan story
+		- Memastikan data tidak null
+		- Memastikan data sesuai dengan yang diharapkan
+
+	# Ketika gagal menambahkan story
+		- Memastikan error message tidak null
+		- Memastikan error message sesuai dengan yang diharapkan

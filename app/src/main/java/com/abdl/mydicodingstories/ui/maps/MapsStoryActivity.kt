@@ -2,18 +2,18 @@ package com.abdl.mydicodingstories.ui.maps
 
 import android.content.res.Resources
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.abdl.mydicodingstories.R
+import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMapsStoryBinding
 import com.abdl.mydicodingstories.ui.MainViewModel
 import com.abdl.mydicodingstories.utils.SessionManager
 import com.abdl.mydicodingstories.utils.ViewModelFactory
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -38,9 +38,13 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val apiService = ApiConfig.getApiService(this)
         session = SessionManager(this)
         mainViewModel =
-            ViewModelProvider(this, ViewModelFactory(session, this))[MainViewModel::class.java]
+            ViewModelProvider(
+                this,
+                ViewModelFactory(session, apiService)
+            )[MainViewModel::class.java]
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -80,12 +84,12 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.normal_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
-            R.id.hybrid_type ->{
+            R.id.hybrid_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
                 true
             }
@@ -95,11 +99,11 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setMapStyle(){
+    private fun setMapStyle() {
         try {
             val success =
                 mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
-            if (!success){
+            if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }
         } catch (e: Resources.NotFoundException) {
@@ -109,15 +113,17 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val boundsBuilder = LatLngBounds.Builder()
 
-    private fun storyMarker(){
-        mainViewModel.listStory.observe(this){ stories ->
+    private fun storyMarker() {
+        mainViewModel.listStory.observe(this) { stories ->
             Log.d(TAG, "cek total story: ${stories.size}")
             stories.forEach { story ->
                 if (story.lat != null && story.lon != null) {
                     Log.d(TAG, "cek jumlah marker: ${story.lat}")
                     val latLng = LatLng(story.lat, story.lon)
                     val addressName = getAddressName(story.lat, story.lon)
-                    mMap.addMarker(MarkerOptions().position(latLng).title(story.name).snippet(addressName))
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng).title(story.name).snippet(addressName)
+                    )
                     boundsBuilder.include(latLng)
                 }
             }
@@ -139,11 +145,11 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         val geocoder = Geocoder(this@MapsStoryActivity, Locale.getDefault())
         try {
             val list = geocoder.getFromLocation(lat, lon, 1)
-            if (list != null && list.size != 0){
+            if (list != null && list.size != 0) {
                 addressName = list[0].getAddressLine(0)
                 Log.d(TAG, "getAddressName: $addressName")
             }
-        } catch (e: IOException){
+        } catch (e: IOException) {
             e.printStackTrace()
         }
         return addressName

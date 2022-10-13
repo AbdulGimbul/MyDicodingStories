@@ -1,7 +1,5 @@
 package com.abdl.mydicodingstories.ui
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,21 +8,20 @@ import androidx.paging.*
 import com.abdl.mydicodingstories.data.StoryPagingSource
 import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
+import com.abdl.mydicodingstories.data.remote.service.ApiService
 import kotlinx.coroutines.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 
-class MainViewModel(context: Context) : ViewModel() {
+class MainViewModel(private val apiService: ApiService) : ViewModel() {
 
-    val apiService = ApiConfig.getApiService(context)
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
-    private val _errorMessage = MutableLiveData<String?>()
+    val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -33,14 +30,14 @@ class MainViewModel(context: Context) : ViewModel() {
     val _listStory = MutableLiveData<List<ListStoryItem>>()
     val listStory: LiveData<List<ListStoryItem>> = _listStory
 
-    private val _postStoryResponse = MutableLiveData<AddStoryResponse>()
+    val _postStoryResponse = MutableLiveData<AddStoryResponse>()
     val postStoryResponse: LiveData<AddStoryResponse> = _postStoryResponse
 
     init {
         fetchStories()
     }
 
-     fun fetchStories() {
+    fun fetchStories() {
         _isLoading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = apiService.getAllStories()
