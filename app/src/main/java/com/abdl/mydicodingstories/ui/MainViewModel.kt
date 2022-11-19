@@ -66,7 +66,7 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
         }
     }
 
-    private fun onError(message: String) {
+    fun onError(message: String) {
         _errorMessage.value = message
         _isLoading.value = false
     }

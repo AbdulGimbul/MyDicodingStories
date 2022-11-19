@@ -145,4 +145,26 @@ class LoginViewModelTest {
             loginViewModel.errorMessage.getOrAwaitValue()
         }
     }
+
+    @Test
+    fun onErrorTest(){
+        val error = "Error : Email is already taken"
+
+        loginViewModel.onError(error)
+
+        assertEquals(error, loginViewModel.errorMessage.getOrAwaitValue())
+    }
+
+    @Test
+    fun getErrorMessageTest(){
+        val expectedError = "Email is already taken"
+        val actualError = loginViewModel.getErrorMessage("""
+            {
+                "error": true,
+                "message": "Email is already taken"
+            }
+        """.trimIndent())
+
+        assertEquals(expectedError, actualError)
+    }
 }

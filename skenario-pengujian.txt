@@ -2,40 +2,51 @@
 
 	# Ketika gagal login
 		- Memastikan nilai dari errorMessage sudah sesuai
-		- Memastikan loginResponse tidak pernah memiliki value
-
+		- Memastikan loginResponse tidak pernah memiliki value ketika proses selesai (TimeOutException)
 
 	# Ketika berhasil login
 		- Memastikan fungsi saveAuthToken telah dipanggil
 		- Memastikan data loginResponse sesuai dengan yang diharapkan
-		- Memastikan errorMessage tidak pernah memiliki value
+		- Memastikan errorMessage tidak pernah memiliki value ketika proses selesai (TimeOutException)
 
 	# Ketika gagal registrasi
 		- Memastikan nilai dari errorMessage sudah sesuai
-		- Memastikan registerResponse tidak pernah memiliki value
+		- Memastikan registerResponse tidak pernah memiliki value ketika proses selesai (TimeOutException)
 
 
 	# Ketika berhasil registrasi
 		- Memastikan data registerResponse sesuai dengan yang diharapkan
-		- Memastikan errorMessage tidak pernah memiliki value
+		- Memastikan errorMessage tidak pernah memiliki value ketika proses selesai (TimeOutException)
+
+	# Ketika terdapat error
+	    - Memastikan nilai / isi errorMessage sesuai dengan yang diharapkan / didapat dari parameter onError
+
+	# Ketika pengambilan error
+        - Memastikan return value / nilai yang dikembalikan sesuai dengan yang diharapkan
 
 //Skenario MainViewModel: (Unit Test)
 	
 	# Ketika berhasil memuat data story dari internet
 		- Memastikan data listStory sesuai dengan yang diharapkan
-		- Memastikan errorMessage tidak pernah memiliki value
+		- Memastikan errorMessage tidak pernah memiliki value ketika proses selesai (TimeOutException)
 	
 	# Ketika gagal memuat data story
 		- Memastikan nilai dari errorMessage sudah sesuai
-		- Memastikan listStory tidak pernah memiliki value
+		- Memastikan listStory tidak pernah memiliki value ketika proses selesai (TimeOutException)
 
 	# Ketika berhasil menambahkan story
 		- Memastikan data postStoryResponse sesuai dengan yang diharapkan
-		- Memastikan errorMessage tidak pernah memiliki value
+		- Memastikan errorMessage tidak pernah memiliki value ketika proses selesai (TimeOutException)
 
 	# Ketika gagal menambahkan story
 		- Memastikan nilai dari errorMessage sudah sesuai
-		- Memastikan postStoryResponse tidak pernah memiliki value
+		- Memastikan postStoryResponse tidak pernah memiliki value ketika proses selesai (TimeOutException)
+
+	# Ketika terdapat error
+        - Memastikan nilai / isi errorMessage sesuai dengan yang diharapkan / didapat dari parameter onError
+
+    # Ketika pengambilan error
+        - Memastikan return value / nilai yang dikembalikan sesuai dengan yang diharapkan
 
 //Skenario PagingViewModel: (Unit Test)
 

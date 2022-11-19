@@ -139,4 +139,26 @@ class MainViewModelTest {
             mainViewModel.postStoryResponse.getOrAwaitValue()
         }
     }
+
+    @Test
+    fun onErrorTest(){
+        val error = "Error : Token maximum age exceeded"
+
+        mainViewModel.onError(error)
+
+        assertEquals(error, mainViewModel.errorMessage.getOrAwaitValue())
+    }
+
+    @Test
+    fun getErrorMessageTest(){
+        val expectedError = "Token maximum age exceeded"
+        val actualError = mainViewModel.getErrorMessage("""
+            {
+                "error": true,
+                "message": "Token maximum age exceeded"
+            }
+        """.trimIndent())
+
+        assertEquals(expectedError, actualError)
+    }
 }
