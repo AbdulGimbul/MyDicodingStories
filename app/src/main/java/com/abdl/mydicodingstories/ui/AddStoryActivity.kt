@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityAddStoryBinding
 import com.abdl.mydicodingstories.utils.SessionManager
@@ -39,10 +40,11 @@ class AddStoryActivity : AppCompatActivity() {
 
         val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
+        val repository = PagingRepository(apiService)
         mainViewModel =
             ViewModelProvider(
                 this,
-                ViewModelFactory(session, apiService)
+                ViewModelFactory(session, apiService, repository)
             )[MainViewModel::class.java]
 
 
@@ -160,8 +162,10 @@ class AddStoryActivity : AppCompatActivity() {
                 if (responseBody != null && !responseBody.error) {
                     Toast.makeText(this@AddStoryActivity, responseBody.message, Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
-                    startActivity(intent)
+                    Intent(this@AddStoryActivity, MainActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(it)
+                    }
                 }
             }
         } else {

@@ -85,7 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edt_pass_h"
+                android:id="@+id/edt_pass_h_regis"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -99,7 +99,7 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintWidth_percent=".8">
 
-                <EditText
+                <com.abdl.mydicodingstories.utils.CustomEdittext
                     android:id="@+id/edt_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_pass_h"
+                app:layout_constraintTop_toBottomOf="@id/edt_pass_h_regis"
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintWidth_percent=".8">
 

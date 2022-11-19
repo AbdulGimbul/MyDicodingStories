@@ -58,6 +58,23 @@ object DataDummy {
         )
     }
 
+    fun generateDummyStoriesList(): List<ListStoryItem> {
+        val storyList = ArrayList<ListStoryItem>()
+        for (i in 0..10) {
+            val story = ListStoryItem(
+                "https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/feature-1-kurikulum-global-3.png",
+                "2022-02-22T22:22:22Z",
+                "Name $i",
+                "Deskripsi",
+                0.0,
+                "$i",
+                0.0,
+            )
+            storyList.add(story)
+        }
+        return storyList
+    }
+
     fun generateDummyStoriesFailed(): Response<StoriesResponse> {
         val storyList = ArrayList<ListStoryItem>()
         return Response.success(
@@ -87,7 +104,7 @@ object DataDummy {
         )
     }
 
-    fun generateStoriesWithPage(): List<ListStoryItem>{
+    fun generateStoriesWithPage(): List<ListStoryItem> {
         val items: MutableList<ListStoryItem> = arrayListOf()
         for (i in 0..10) {
             val story = ListStoryItem(
@@ -119,9 +136,9 @@ object DataDummy {
             storyList.add(story)
         }
         return StoriesResponse(
-                storyList,
-                false,
-                "Stories fetched successfully"
+            storyList,
+            false,
+            "Stories fetched successfully"
 
         )
     }

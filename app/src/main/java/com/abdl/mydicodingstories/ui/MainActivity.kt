@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdl.mydicodingstories.adapter.ItemStoryAdapter
 import com.abdl.mydicodingstories.adapter.LoadingStateAdapter
+import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMainBinding
@@ -23,6 +24,7 @@ import com.abdl.mydicodingstories.utils.ViewModelFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var pagingViewModel: PagingViewModel
     private lateinit var rvAdapter: ItemStoryAdapter
     private lateinit var session: SessionManager
 
@@ -34,21 +36,18 @@ class MainActivity : AppCompatActivity() {
         rvAdapter = ItemStoryAdapter()
 
         val apiService = ApiConfig.getApiService(this)
+        val repository = PagingRepository(apiService)
         session = SessionManager(this)
         mainViewModel =
             ViewModelProvider(
                 this,
-                ViewModelFactory(session, apiService)
+                ViewModelFactory(session, apiService, repository)
             )[MainViewModel::class.java]
+        pagingViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(session, apiService, repository)
+        )[PagingViewModel::class.java]
 
-//        mainViewModel.listStory.observe(this) {
-//            rvAdapter.setData(it)
-//        }
-
-//        mainViewModel.getStoryWithPage.observe(this){
-//            Log.d("MainActivity", "cek data paging : $it")
-//            rvAdapter.submitData(lifecycle, it)
-//        }
 
         mainViewModel.isLoading.observe(this) {
             if (it == true) {
@@ -103,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                     rvAdapter.retry()
                 }
             )
-            mainViewModel.getStoryWithPage.observe(this@MainActivity) {
+            pagingViewModel.getStoryWithPage.observe(this@MainActivity) {
                 rvAdapter.submitData(lifecycle, it)
             }
         }

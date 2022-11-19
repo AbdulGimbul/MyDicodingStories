@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.abdl.mydicodingstories.R
+import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMapsStoryBinding
 import com.abdl.mydicodingstories.ui.MainViewModel
@@ -39,12 +40,15 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         val apiService = ApiConfig.getApiService(this)
+        val repository = PagingRepository(apiService)
         session = SessionManager(this)
         mainViewModel =
             ViewModelProvider(
                 this,
-                ViewModelFactory(session, apiService)
+                ViewModelFactory(session, apiService, repository)
             )[MainViewModel::class.java]
+
+        mainViewModel.fetchStories()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager

@@ -3,9 +3,6 @@ package com.abdl.mydicodingstories.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.*
-import com.abdl.mydicodingstories.data.StoryPagingSource
 import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiService
@@ -21,21 +18,17 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
-    val _errorMessage = MutableLiveData<String?>()
+    private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    val _listStory = MutableLiveData<List<ListStoryItem>>()
+    private val _listStory = MutableLiveData<List<ListStoryItem>>()
     val listStory: LiveData<List<ListStoryItem>> = _listStory
 
-    val _postStoryResponse = MutableLiveData<AddStoryResponse>()
+    private val _postStoryResponse = MutableLiveData<AddStoryResponse>()
     val postStoryResponse: LiveData<AddStoryResponse> = _postStoryResponse
-
-    init {
-        fetchStories()
-    }
 
     fun fetchStories() {
         _isLoading.value = true
@@ -48,7 +41,8 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
                     _listStory.postValue(storyList)
                 } else {
                     _isLoading.value = false
-                    onError("Error : ${response.message()}")
+                    val error = response.errorBody()?.string()
+                    onError("Error : ${error?.let { getErrorMessage(it) }}")
                 }
             }
         }
@@ -72,23 +66,13 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
         }
     }
 
-    val getStoryWithPage: LiveData<PagingData<ListStoryItem>> =
-        Pager(
-            config = PagingConfig(
-                pageSize = 5
-            ),
-            pagingSourceFactory = {
-                StoryPagingSource(apiService)
-            }
-        ).liveData.cachedIn(viewModelScope)
-
     private fun onError(message: String) {
         _errorMessage.value = message
         _isLoading.value = false
     }
 
-    private fun getErrorMessage(raw: String): String {
+    fun getErrorMessage(raw: String): String {
         val obj = JSONObject(raw)
-        return obj.getString("message")
+        return obj.getString("message");
     }
 }

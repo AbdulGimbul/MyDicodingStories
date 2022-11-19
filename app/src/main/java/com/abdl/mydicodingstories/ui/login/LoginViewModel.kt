@@ -19,7 +19,7 @@ class LoginViewModel(private val session: SessionManager, private val apiService
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
-    val _errorMessage = MutableLiveData<String?>()
+    private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
     private val _isLoading = MutableLiveData<Boolean>()

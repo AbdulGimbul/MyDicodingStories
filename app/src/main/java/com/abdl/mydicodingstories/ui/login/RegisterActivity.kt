@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityRegisterBinding
 import com.abdl.mydicodingstories.utils.SessionManager
@@ -23,10 +23,11 @@ class RegisterActivity : AppCompatActivity() {
 
         val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
+        val repository = PagingRepository(apiService)
         loginViewModel =
             ViewModelProvider(
                 this,
-                ViewModelFactory(session, apiService)
+                ViewModelFactory(session, apiService, repository)
             )[LoginViewModel::class.java]
 
         binding.btnRegister.setOnClickListener {
@@ -71,12 +72,6 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Email tidak valid!", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.edtPass.addTextChangedListener {
-            if (it?.length!! < 6) {
-                binding.edtPass.error = "Minimal 6 karakter"
             }
         }
     }

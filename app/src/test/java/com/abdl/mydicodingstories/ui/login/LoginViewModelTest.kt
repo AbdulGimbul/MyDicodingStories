@@ -3,24 +3,27 @@ package com.abdl.mydicodingstories.ui.login
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
+import com.abdl.mydicodingstories.data.remote.response.LoginResponse
+import com.abdl.mydicodingstories.data.remote.response.LoginResult
+import com.abdl.mydicodingstories.data.remote.response.RegisterResponse
 import com.abdl.mydicodingstories.data.remote.service.ApiService
-import com.abdl.mydicodingstories.ui.DataDummy
-import com.abdl.mydicodingstories.ui.FakeApiService
 import com.abdl.mydicodingstories.ui.getOrAwaitValue
 import com.abdl.mydicodingstories.utils.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
+import retrofit2.Response
+import java.util.concurrent.TimeoutException
 
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
@@ -29,20 +32,18 @@ class LoginViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
     private lateinit var sessionManager: SessionManager
 
-    @Mock
-    private lateinit var apiService: ApiService
-
     private lateinit var context: Context
+
+    private lateinit var apiService: ApiService
 
     private lateinit var loginViewModel: LoginViewModel
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
-        apiService = FakeApiService()
+        apiService = mock(ApiService::class.java)
         sessionManager = SessionManager(context)
         loginViewModel = LoginViewModel(sessionManager, apiService)
     }
@@ -61,43 +62,87 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `when Failed Login Because User Not Found`() {
-        val expectedResponse = DataDummy.generateFailedLogin()
-        loginViewModel._errorMessage.postValue(expectedResponse)
-        val actualResponse = loginViewModel.errorMessage.getOrAwaitValue()
-        assertNotNull(actualResponse)
-        assertEquals(expectedResponse.length, actualResponse?.length)
+    fun `when Failed Login Because User Not Found`() = runTest {
+        `when`(apiService.login("invalid@email.com", "invalid")).thenReturn(
+            Response.error(413, "{'message': 'username tidak ditemukan'}".toResponseBody())
+        )
+
+        loginViewModel.getLogin("invalid@email.com", "invalid")
+
+        assertEquals(
+            "Error : username tidak ditemukan",
+            loginViewModel.errorMessage.getOrAwaitValue()
+        )
+
+        assertThrows(TimeoutException::class.java) {
+            loginViewModel.loginResponse.getOrAwaitValue()
+        }
     }
 
     @Test
     fun `when Success Login and Should Not Null`() = runTest {
-        val user = "abdl@email.com"
-        val passwd = "12345678"
-        val expectedResponse = apiService.login(user, passwd).body()
-        loginViewModel._loginResponse.postValue(expectedResponse)
-        val actualResult = loginViewModel.loginResponse.getOrAwaitValue()
-        assertNotNull(actualResult)
-        assertEquals(expectedResponse, actualResult)
+        val sessionMgr = mock(SessionManager::class.java)
+        val apiService = mock(ApiService::class.java)
+        val viewModel = LoginViewModel(sessionMgr, apiService)
+
+        val loginResult = LoginResult("user", "user-123", "a-user-token")
+        val loginResponse = LoginResponse(loginResult, false, "")
+
+        `when`(apiService.login("valid@email.com", "correct password")).thenReturn(
+            Response.success(loginResponse)
+        )
+
+        viewModel.getLogin("valid@email.com", "correct password")
+
+        verify(sessionMgr).saveAuthToken(
+            "a-user-token",
+            "user",
+            "user-123"
+        )
+
+        assertEquals(
+            loginResponse,
+            viewModel.loginResponse.getOrAwaitValue()
+        )
+        assertThrows(TimeoutException::class.java) {
+            viewModel.errorMessage.getOrAwaitValue()
+        }
     }
 
     @Test
-    fun `when Failed Register because email is already taken`() {
-        val expectedResponse = DataDummy.generateFailedRegister()
-        loginViewModel._errorMessage.postValue(expectedResponse)
-        val actualResponse = loginViewModel.errorMessage.getOrAwaitValue()
-        assertNotNull(actualResponse)
-        assertEquals(expectedResponse.length, actualResponse?.length)
+    fun `when Failed Register because email is already taken`() = runTest {
+        `when`(apiService.register("invalid", "invalid@email.com", "1234567")).thenReturn(
+            Response.error(413, "{'message': 'email sudah pernah digunakan'}".toResponseBody())
+        )
+
+        loginViewModel.getRegister("invalid", "invalid@email.com", "1234567")
+
+        assertEquals(
+            "Error : email sudah pernah digunakan",
+            loginViewModel.errorMessage.getOrAwaitValue()
+        )
+
+        assertThrows(TimeoutException::class.java) {
+            loginViewModel.registerResponse.getOrAwaitValue()
+        }
     }
 
     @Test
     fun `when Success Register and Should Not Null`() = runTest {
-        val name = "aa"
-        val user = "aa.aa@mail.com"
-        val passwd = "123456"
-        val expectedResponse = apiService.register(name, user, passwd).body()
-        loginViewModel._registerResponse.postValue(expectedResponse)
-        val actualResponse = loginViewModel.registerResponse.getOrAwaitValue()
-        assertNotNull(actualResponse)
-        assertEquals(expectedResponse, actualResponse)
+        val registerResponse = RegisterResponse(false, "")
+
+        `when`(apiService.register("valid", "valid@email.com", "1234567")).thenReturn(
+            Response.success(registerResponse)
+        )
+
+        loginViewModel.getRegister("valid", "valid@email.com", "1234567")
+
+        assertEquals(
+            registerResponse,
+            loginViewModel.registerResponse.getOrAwaitValue()
+        )
+        assertThrows(TimeoutException::class.java) {
+            loginViewModel.errorMessage.getOrAwaitValue()
+        }
     }
 }

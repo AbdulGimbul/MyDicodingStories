@@ -1,13 +1,15 @@
 package com.abdl.mydicodingstories.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityLoginBinding
 import com.abdl.mydicodingstories.ui.MainActivity
@@ -27,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
+        val repository = PagingRepository(apiService)
         if (session.fetchAuthToken() != null) {
             Intent(this@LoginActivity, MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -37,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel =
             ViewModelProvider(
                 this,
-                ViewModelFactory(session, apiService)
+                ViewModelFactory(session, apiService, repository)
             )[LoginViewModel::class.java]
 
         binding.btnLogin.setOnClickListener {
@@ -47,12 +50,6 @@ class LoginActivity : AppCompatActivity() {
         binding.register.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-        }
-
-        binding.edtPass.addTextChangedListener {
-            if (it?.length!! < 6) {
-                binding.edtPass.error = "Minimal 6 karakter"
-            }
         }
 
 
@@ -101,6 +98,8 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        playAnimation()
     }
 
     private fun loginUser() {
@@ -138,5 +137,21 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isValidEmail(email: CharSequence): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun playAnimation() {
+        val edtUsername =
+            ObjectAnimator.ofFloat(binding.edtUsernameH, View.ALPHA, 1f).setDuration(500)
+        val edtPass = ObjectAnimator.ofFloat(binding.edtPassH, View.ALPHA, 1f).setDuration(500)
+        val forgetPass =
+            ObjectAnimator.ofFloat(binding.lupaPassword, View.ALPHA, 1f).setDuration(500)
+        val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
+        val register = ObjectAnimator.ofFloat(binding.register, View.ALPHA, 1f).setDuration(500)
+
+
+        AnimatorSet().apply {
+            playSequentially(edtUsername, edtPass, forgetPass, btnLogin, register)
+            start()
+        }
     }
 }

@@ -22,14 +22,14 @@ class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListStoryItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val responseData = apiService.getStoriesWithPage(position, params.loadSize)
+            val responseData = apiService.getStoriesWithPage(position, params.loadSize).listStory
 
-            Log.d("StoryPagingSource", "cek data paging ${responseData.listStory}")
+            Log.d("StoryPagingSource", "cek data paging ${responseData}")
 
             LoadResult.Page(
-                data = responseData.listStory,
+                data = responseData,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                nextKey = if (responseData.listStory.isNullOrEmpty()) null else position + 1
+                nextKey = if (responseData.isEmpty()) null else position + 1
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)
