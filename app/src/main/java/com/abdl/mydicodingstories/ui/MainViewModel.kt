@@ -14,7 +14,7 @@ import org.json.JSONObject
 class MainViewModel(private val apiService: ApiService) : ViewModel() {
 
     var job: Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
@@ -73,6 +73,6 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
 
     fun getErrorMessage(raw: String): String {
         val obj = JSONObject(raw)
-        return obj.getString("message");
+        return obj.getString("message")
     }
 }
