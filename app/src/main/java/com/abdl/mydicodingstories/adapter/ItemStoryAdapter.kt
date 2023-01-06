@@ -75,7 +75,7 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
 
             override fun areContentsTheSame(
                 oldItem: ListStoryItem,
-                newItem: ListStoryItem
+                newItem: ListStoryItem,
             ): Boolean {
                 return oldItem.id == newItem.id
             }

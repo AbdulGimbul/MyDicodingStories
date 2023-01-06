@@ -7,8 +7,11 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiService
+import javax.inject.Inject
 
-class PagingRepository(private val apiService: ApiService) {
+class PagingRepository @Inject constructor(
+    private val apiService: ApiService,
+) {
 
     fun getStoryPaging(): LiveData<PagingData<ListStoryItem>> {
         return Pager(

@@ -7,19 +7,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.abdl.mydicodingstories.data.PagingRepository
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityLoginBinding
 import com.abdl.mydicodingstories.ui.MainActivity
 import com.abdl.mydicodingstories.utils.SessionManager
-import com.abdl.mydicodingstories.utils.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,21 +26,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        val apiService = ApiConfig.getApiService(this)
         val session = SessionManager(this)
-        val repository = PagingRepository(apiService)
         if (session.fetchAuthToken() != null) {
             Intent(this@LoginActivity, MainActivity::class.java).also {
                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(it)
             }
         }
-
-        loginViewModel =
-            ViewModelProvider(
-                this,
-                ViewModelFactory(session, apiService, repository)
-            )[LoginViewModel::class.java]
 
         binding.btnLogin.setOnClickListener {
             loginUser()
@@ -51,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
 
         binding.lupaPassword.setOnClickListener {
             Snackbar.make(binding.container, "Silahkan menghubungi admin!", Snackbar.LENGTH_LONG)

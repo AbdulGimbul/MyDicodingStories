@@ -16,21 +16,21 @@ interface ApiService {
     suspend fun register(
         @Field("name") name: String,
         @Field("email") email: String,
-        @Field("password") password: String
+        @Field("password") password: String,
     ): Response<RegisterResponse>
 
     @FormUrlEncoded
     @POST("/v1/login")
     suspend fun login(
         @Field("email") email: String,
-        @Field("password") password: String
+        @Field("password") password: String,
     ): Response<LoginResponse>
 
     @Multipart
     @POST("/v1/stories")
     suspend fun addStory(
         @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody
+        @Part("description") description: RequestBody,
     ): Response<AddStoryResponse>
 
     @GET("/v1/stories?location=1")
@@ -39,6 +39,6 @@ interface ApiService {
     @GET("v1/stories")
     suspend fun getStoriesWithPage(
         @Query("page") page: Int,
-        @Query("size") size: Int
+        @Query("size") size: Int,
     ): StoriesResponse
 }

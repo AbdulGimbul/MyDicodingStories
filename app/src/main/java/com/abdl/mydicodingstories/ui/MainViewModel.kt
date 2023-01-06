@@ -6,12 +6,17 @@ import androidx.lifecycle.ViewModel
 import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
+import javax.inject.Inject
 
-class MainViewModel(private val apiService: ApiService) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val apiService: ApiService,
+) : ViewModel() {
 
     var job: Job? = null
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

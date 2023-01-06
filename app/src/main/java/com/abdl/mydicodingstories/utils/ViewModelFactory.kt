@@ -11,7 +11,7 @@ import com.abdl.mydicodingstories.ui.login.LoginViewModel
 class ViewModelFactory(
     private val sessionManager: SessionManager,
     private val apiService: ApiService,
-    private val repository: PagingRepository
+    private val repository: PagingRepository,
 ) :
     ViewModelProvider.NewInstanceFactory() {
 

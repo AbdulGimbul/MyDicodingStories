@@ -8,11 +8,16 @@ import com.abdl.mydicodingstories.data.remote.response.LoginResponse
 import com.abdl.mydicodingstories.data.remote.response.RegisterResponse
 import com.abdl.mydicodingstories.data.remote.service.ApiService
 import com.abdl.mydicodingstories.utils.SessionManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import org.json.JSONObject
+import javax.inject.Inject
 
-class LoginViewModel(private val session: SessionManager, private val apiService: ApiService) :
-    ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val session: SessionManager,
+    private val apiService: ApiService,
+) : ViewModel() {
 
     var job: Job? = null
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->

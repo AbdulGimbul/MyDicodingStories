@@ -13,7 +13,7 @@ data class StoriesResponse(
     val error: Boolean? = null,
 
     @field:SerializedName("message")
-    val message: String? = null
+    val message: String? = null,
 )
 
 @Parcelize
@@ -38,5 +38,5 @@ data class ListStoryItem(
     val id: String? = null,
 
     @field:SerializedName("lat")
-    val lat: Double? = null
+    val lat: Double? = null,
 ) : Parcelable

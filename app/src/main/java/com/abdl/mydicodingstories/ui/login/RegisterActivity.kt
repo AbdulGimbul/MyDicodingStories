@@ -4,31 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.abdl.mydicodingstories.data.PagingRepository
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityRegisterBinding
-import com.abdl.mydicodingstories.utils.SessionManager
-import com.abdl.mydicodingstories.utils.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val apiService = ApiConfig.getApiService(this)
-        val session = SessionManager(this)
-        val repository = PagingRepository(apiService)
-        loginViewModel =
-            ViewModelProvider(
-                this,
-                ViewModelFactory(session, apiService, repository)
-            )[LoginViewModel::class.java]
 
         binding.btnRegister.setOnClickListener {
             registerUser()

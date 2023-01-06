@@ -141,7 +141,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun onErrorTest(){
+    fun onErrorTest() {
         val error = "Error : Token maximum age exceeded"
 
         mainViewModel.onError(error)
@@ -150,7 +150,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun getErrorMessageTest(){
+    fun getErrorMessageTest() {
         val expectedError = "Token maximum age exceeded"
         val actualError = mainViewModel.getErrorMessage("""
             {

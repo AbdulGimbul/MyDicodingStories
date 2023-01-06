@@ -10,17 +10,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.abdl.mydicodingstories.data.PagingRepository
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityAddStoryBinding
-import com.abdl.mydicodingstories.utils.SessionManager
-import com.abdl.mydicodingstories.utils.ViewModelFactory
 import com.abdl.mydicodingstories.utils.rotateBitmap
 import com.abdl.mydicodingstories.utils.uriToFile
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -28,25 +25,16 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
+@AndroidEntryPoint
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by viewModels()
     private var getFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val apiService = ApiConfig.getApiService(this)
-        val session = SessionManager(this)
-        val repository = PagingRepository(apiService)
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ViewModelFactory(session, apiService, repository)
-            )[MainViewModel::class.java]
-
 
         if (!allPermissionGranted()) {
             ActivityCompat.requestPermissions(
@@ -81,7 +69,7 @@ class AddStoryActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {

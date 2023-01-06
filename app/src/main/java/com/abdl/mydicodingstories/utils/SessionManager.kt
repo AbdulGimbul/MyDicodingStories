@@ -2,8 +2,12 @@ package com.abdl.mydicodingstories.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class SessionManager(context: Context) {
+class SessionManager @Inject constructor(
+    @ApplicationContext context: Context,
+) {
     private val prefs: SharedPreferences? =
         context.getSharedPreferences("MyDicodingStories", Context.MODE_PRIVATE)
 

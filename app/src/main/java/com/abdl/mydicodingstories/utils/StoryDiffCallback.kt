@@ -5,7 +5,7 @@ import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 
 class StoryDiffCallback(
     private val mOldStoryList: List<ListStoryItem>,
-    private val mNewStoryList: List<ListStoryItem>
+    private val mNewStoryList: List<ListStoryItem>,
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

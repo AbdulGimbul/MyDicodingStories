@@ -5,28 +5,28 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdl.mydicodingstories.adapter.ItemStoryAdapter
 import com.abdl.mydicodingstories.adapter.LoadingStateAdapter
-import com.abdl.mydicodingstories.data.PagingRepository
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMainBinding
 import com.abdl.mydicodingstories.ui.login.LoginActivity
 import com.abdl.mydicodingstories.ui.maps.MapsStoryActivity
 import com.abdl.mydicodingstories.utils.SessionManager
-import com.abdl.mydicodingstories.utils.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var pagingViewModel: PagingViewModel
     private lateinit var rvAdapter: ItemStoryAdapter
     private lateinit var session: SessionManager
+
+    private val mainViewModel: MainViewModel by viewModels()
+    private val pagingViewModel: PagingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter = ItemStoryAdapter()
 
-        val apiService = ApiConfig.getApiService(this)
-        val repository = PagingRepository(apiService)
         session = SessionManager(this)
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ViewModelFactory(session, apiService, repository)
-            )[MainViewModel::class.java]
-        pagingViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(session, apiService, repository)
-        )[PagingViewModel::class.java]
-
 
         mainViewModel.isLoading.observe(this) {
             if (it == true) {

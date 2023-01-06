@@ -147,7 +147,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun onErrorTest(){
+    fun onErrorTest() {
         val error = "Error : Email is already taken"
 
         loginViewModel.onError(error)
@@ -156,7 +156,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun getErrorMessageTest(){
+    fun getErrorMessageTest() {
         val expectedError = "Email is already taken"
         val actualError = loginViewModel.getErrorMessage("""
             {

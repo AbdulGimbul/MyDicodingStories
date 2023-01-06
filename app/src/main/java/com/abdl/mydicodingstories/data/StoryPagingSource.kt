@@ -5,8 +5,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.data.remote.service.ApiService
+import javax.inject.Inject
 
-class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource @Inject constructor(
+    private val apiService: ApiService,
+) : PagingSource<Int, ListStoryItem>() {
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1

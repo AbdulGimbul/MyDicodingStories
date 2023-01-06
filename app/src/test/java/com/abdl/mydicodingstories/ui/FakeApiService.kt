@@ -15,7 +15,7 @@ class FakeApiService : ApiService {
     override suspend fun register(
         name: String,
         email: String,
-        password: String
+        password: String,
     ): Response<RegisterResponse> {
         return dummyRegister
     }
@@ -28,7 +28,7 @@ class FakeApiService : ApiService {
     private val dummyAddStory = DataDummy.generateDummyPostStory()
     override suspend fun addStory(
         file: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
     ): Response<AddStoryResponse> {
         return dummyAddStory
     }
