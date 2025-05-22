@@ -34,7 +34,7 @@ class CustomEdittext : AppCompatEditText, View.OnTouchListener {
         init()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
