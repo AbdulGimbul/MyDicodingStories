@@ -2,7 +2,6 @@ package com.abdl.mydicodingstories.utils
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -35,24 +34,6 @@ class CustomEdittext : AppCompatEditText, View.OnTouchListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-    }
-
-    private fun hideClearButton() {
-        setButtonDrawables()
-    }
-
-    private fun setButtonDrawables(
-        startOfTheText: Drawable? = null,
-        topOfTheText: Drawable? = null,
-        endOfTheText: Drawable? = null,
-        bottomOfTheText: Drawable? = null,
-    ) {
-        setCompoundDrawablesWithIntrinsicBounds(
-            startOfTheText,
-            topOfTheText,
-            endOfTheText,
-            bottomOfTheText
-        )
     }
 
     private fun init() {

@@ -44,7 +44,6 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
         fun bind(item: ListStoryItem) {
             with(itemBinding) {
                 tvItemName.text = item.name
-                Log.d("ItemStoryAdapter", "cek item : ${item.name}")
                 tvItemStory.text = item.description
 
                 btnLike.setOnClickListener {

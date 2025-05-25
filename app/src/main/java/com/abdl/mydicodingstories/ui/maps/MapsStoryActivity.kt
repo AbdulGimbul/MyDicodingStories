@@ -9,15 +9,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.abdl.mydicodingstories.R
-import com.abdl.mydicodingstories.data.PagingRepository
-import com.abdl.mydicodingstories.data.remote.service.ApiConfig
 import com.abdl.mydicodingstories.databinding.ActivityMapsStoryBinding
 import com.abdl.mydicodingstories.ui.MainViewModel
 import com.abdl.mydicodingstories.utils.SessionManager
-import com.abdl.mydicodingstories.utils.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,29 +23,25 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject // Import for field injection
 
+@AndroidEntryPoint
 class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsStoryBinding
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var session: SessionManager
+    private val mainViewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMapsStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val apiService = ApiConfig.getApiService(this)
-        val repository = PagingRepository(apiService)
-        session = SessionManager(this)
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ViewModelFactory(session, apiService, repository)
-            )[MainViewModel::class.java]
 
         mainViewModel.fetchStories()
 
@@ -95,7 +88,7 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setMapStyle() {
         try {
             val success =
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style)) //
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }

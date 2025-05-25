@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -25,6 +26,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 @AndroidEntryPoint
 class AddStoryActivity : AppCompatActivity() {
@@ -175,7 +178,23 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun reduceFileImage(file: File): File {
-        return file
+        try {
+            val bitmap = BitmapFactory.decodeFile(file.path)
+
+            val outputDir = file.parentFile ?: return file
+            val outputFile = File(outputDir, "compressed_${file.name}")
+
+            FileOutputStream(outputFile).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+            }
+            return outputFile
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return file
+        } catch (e: OutOfMemoryError) {
+            e.printStackTrace()
+            return file
+        }
     }
 
     companion object {
