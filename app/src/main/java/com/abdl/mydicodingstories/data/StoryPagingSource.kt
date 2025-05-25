@@ -1,6 +1,5 @@
 package com.abdl.mydicodingstories.data
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem

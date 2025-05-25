@@ -24,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         loginViewModel.registerResponse.observe(this) { result ->
-            when (result.message) {
+            when (result?.message) {
                 "User created" -> {
                     Toast.makeText(
                         this@RegisterActivity,

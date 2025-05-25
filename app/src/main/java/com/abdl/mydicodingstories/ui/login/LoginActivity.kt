@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.loginResponse.observe(this@LoginActivity) { result ->
-            when (result.message) {
+            when (result?.message) {
                 "success" -> {
                     Intent(this@LoginActivity, MainActivity::class.java).also {
                         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -34,11 +34,11 @@ class MainViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _listStory = MutableLiveData<List<ListStoryItem>>()
-    val listStory: LiveData<List<ListStoryItem>> = _listStory
+    private val _listStory = MutableLiveData<List<ListStoryItem>?>()
+    val listStory: LiveData<List<ListStoryItem>?> = _listStory
 
-    private val _postStoryResponse = MutableLiveData<AddStoryResponse>()
-    val postStoryResponse: LiveData<AddStoryResponse> = _postStoryResponse
+    private val _postStoryResponse = MutableLiveData<AddStoryResponse?>()
+    val postStoryResponse: LiveData<AddStoryResponse?> = _postStoryResponse
 
     fun fetchStories() {
         _isLoading.value = true

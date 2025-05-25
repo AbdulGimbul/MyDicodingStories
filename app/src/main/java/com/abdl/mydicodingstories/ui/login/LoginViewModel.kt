@@ -35,11 +35,11 @@ class LoginViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    val _registerResponse = MutableLiveData<RegisterResponse>()
-    val registerResponse: LiveData<RegisterResponse> = _registerResponse
+    val _registerResponse = MutableLiveData<RegisterResponse?>()
+    val registerResponse: LiveData<RegisterResponse?> = _registerResponse
 
-    val _loginResponse = MutableLiveData<LoginResponse>()
-    val loginResponse: LiveData<LoginResponse> = _loginResponse
+    val _loginResponse = MutableLiveData<LoginResponse?>()
+    val loginResponse: LiveData<LoginResponse?> = _loginResponse
 
     fun getLogin(email: String, password: String) {
         _isLoading.value = true
@@ -92,6 +92,6 @@ class LoginViewModel @Inject constructor(
 
     fun getErrorMessage(raw: String): String {
         val obj = JSONObject(raw)
-        return obj.getString("message");
+        return obj.getString("message")
     }
 }

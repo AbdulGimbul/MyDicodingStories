@@ -101,7 +101,7 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun storyMarker() {
         mainViewModel.listStory.observe(this) { stories ->
-            stories.forEach { story ->
+            stories?.forEach { story ->
                 if (story.lat != null && story.lon != null) {
                     val latLng = LatLng(story.lat, story.lon)
                     getAddressName(story.lat, story.lon, this@MapsStoryActivity) { address ->

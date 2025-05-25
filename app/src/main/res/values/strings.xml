@@ -10,4 +10,8 @@
     <string name="upload">Unggah</string>
     <string name="normal_type">Tipe Normal</string>
     <string name="hybrid_type">Tipe Hybrid</string>
+    <string name="ambil_gambar">Ambil gambar</string>
+    <string name="pindah_kamera">Pindah kamera</string>
+    <string name="logout">Logout</string>
+    <string name="tombol_profil">Tombol profil</string>
 </resources>
