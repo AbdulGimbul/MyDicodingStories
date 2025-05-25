@@ -37,10 +37,12 @@ class RegisterActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
+
                 "\"email\" must be a valid email" -> {
                     Toast.makeText(this@RegisterActivity, "Email harus valid!", Toast.LENGTH_SHORT)
                         .show()
                 }
+
                 else -> {
                     Toast.makeText(this@RegisterActivity, "Registrasi gagal!", Toast.LENGTH_SHORT)
                         .show()
@@ -79,34 +81,27 @@ class RegisterActivity : AppCompatActivity() {
                 edtFirstName.error = "Nama depan tidak boleh kosong"
             }
 
-            if (!isValidEmail(email)) {
-                isInvalidFields = true
-                edtEmail.error = "Email tidak valid"
-            }
-
             if (email.isEmpty()) {
                 isInvalidFields = true
                 edtEmail.error = "Email tidak boleh kosong"
-            }
-
-            if (pass.length < 6) {
+            } else if (!isValidEmail(email)) {
                 isInvalidFields = true
-                edtPass.error = "Password minimal terdiri dari 8 karakter"
+                edtEmail.error = "Email tidak valid"
             }
 
             if (pass.isEmpty()) {
                 isInvalidFields = true
                 edtPass.error = "Password tidak boleh kosong"
+            } else if (pass.length < 8) {
+                isInvalidFields = true
             }
 
             if (repeatPass.isEmpty()) {
                 isInvalidFields = true
-                edtRepeatPass.error = "Password tidak boleh kosong"
-            }
-
-            if (repeatPass != pass) {
+                edtRepeatPass.error = "Ulangi Password tidak boleh kosong"
+            } else if (repeatPass != pass) {
                 isInvalidFields = true
-                edtRepeatPass.error = "Password tidak boleh beda"
+                edtRepeatPass.error = "Password tidak cocok"
             }
 
             if (!isInvalidFields) {

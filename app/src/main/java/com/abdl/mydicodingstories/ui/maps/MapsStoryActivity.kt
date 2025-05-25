@@ -1,7 +1,10 @@
 package com.abdl.mydicodingstories.ui.maps
 
+import android.content.Context
 import android.content.res.Resources
+import android.location.Address
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -23,8 +26,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import okio.IOException
-import java.util.*
+import java.util.Locale
 
 class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -50,21 +52,11 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mainViewModel.fetchStories()
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -72,11 +64,6 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
-
-        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
         setMapStyle()
         storyMarker()
@@ -93,10 +80,12 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
                 true
             }
+
             R.id.hybrid_type -> {
                 mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
                 true
             }
+
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -119,15 +108,16 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun storyMarker() {
         mainViewModel.listStory.observe(this) { stories ->
-            Log.d(TAG, "cek total story: ${stories.size}")
             stories.forEach { story ->
                 if (story.lat != null && story.lon != null) {
-                    Log.d(TAG, "cek jumlah marker: ${story.lat}")
                     val latLng = LatLng(story.lat, story.lon)
-                    val addressName = getAddressName(story.lat, story.lon)
-                    mMap.addMarker(
-                        MarkerOptions().position(latLng).title(story.name).snippet(addressName)
-                    )
+                    getAddressName(story.lat, story.lon, this@MapsStoryActivity) { address ->
+                        runOnUiThread {
+                            mMap.addMarker(
+                                MarkerOptions().position(latLng).title(story.name).snippet(address)
+                            )
+                        }
+                    }
                     boundsBuilder.include(latLng)
                 }
             }
@@ -144,19 +134,43 @@ class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getAddressName(lat: Double, lon: Double): String? {
-        var addressName: String? = null
-        val geocoder = Geocoder(this@MapsStoryActivity, Locale.getDefault())
-        try {
-            val list = geocoder.getFromLocation(lat, lon, 1)
-            if (list != null && list.size != 0) {
-                addressName = list[0].getAddressLine(0)
-                Log.d(TAG, "getAddressName: $addressName")
+    private fun getAddressName(
+        lat: Double,
+        lon: Double,
+        context: Context,
+        callback: (String?) -> Unit
+    ) {
+        val geocoder = Geocoder(context, Locale.getDefault())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            geocoder.getFromLocation(lat, lon, 1, object : Geocoder.GeocodeListener {
+                override fun onGeocode(addresses: MutableList<Address>) {
+                    if (addresses.isNotEmpty()) {
+                        callback(addresses[0].getAddressLine(0))
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onError(errorMessage: String?) {
+                    Log.e(TAG, "Geocoding error (API 33+): $errorMessage")
+                    callback(null)
+                }
+            })
+        } else {
+            try {
+                @Suppress("DEPRECATION")
+                val list: List<Address>? = geocoder.getFromLocation(lat, lon, 1)
+                if (list != null && list.isNotEmpty()) {
+                    callback(list[0].getAddressLine(0))
+                } else {
+                    callback(null)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Geocoding error (pre-API 33): ${e.message}", e)
+                callback(null)
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
-        return addressName
     }
 
     companion object {

@@ -46,16 +46,29 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
                 tvItemName.text = item.name
                 Log.d("ItemStoryAdapter", "cek item : ${item.name}")
                 tvItemStory.text = item.description
-                tvLike.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+
+                btnLike.setOnClickListener {
+                    Toast.makeText(
+                        itemView.context,
+                        "Fitur Like belum tersedia",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
-                tvComments.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+                btnComments.setOnClickListener {
+                    Toast.makeText(
+                        itemView.context,
+                        "Fitur Komentar belum tersedia",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
-                tvShare.setOnClickListener {
-                    Toast.makeText(itemView.context, "Fitur belum tersedia", Toast.LENGTH_SHORT)
+                btnShare.setOnClickListener {
+                    Toast.makeText(
+                        itemView.context,
+                        "Fitur Share belum tersedia",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
 

@@ -11,15 +11,22 @@ import com.abdl.mydicodingstories.ui.getOrAwaitValue
 import com.abdl.mydicodingstories.utils.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Response
@@ -158,12 +165,14 @@ class LoginViewModelTest {
     @Test
     fun getErrorMessageTest() {
         val expectedError = "Email is already taken"
-        val actualError = loginViewModel.getErrorMessage("""
+        val actualError = loginViewModel.getErrorMessage(
+            """
             {
                 "error": true,
                 "message": "Email is already taken"
             }
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         assertEquals(expectedError, actualError)
     }

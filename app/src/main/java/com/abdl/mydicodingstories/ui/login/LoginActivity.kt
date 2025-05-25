@@ -60,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(it)
                     }
                 }
+
                 else -> {
                     Toast.makeText(this@LoginActivity, "Login gagal!", Toast.LENGTH_SHORT).show()
                 }
@@ -80,9 +81,11 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this@LoginActivity, "User tidak ditemukan!", Toast.LENGTH_SHORT)
                         .show()
                 }
+
                 "Error : Invalid password" -> {
                     Toast.makeText(this@LoginActivity, "Password salah!", Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {
                     Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
                 }
@@ -109,11 +112,6 @@ class LoginActivity : AppCompatActivity() {
                 edtUsername.error = "Email tidak boleh kosong"
             }
 
-            if (password.length < 6) {
-                isInvalidFields = true
-                edtPass.error = "Password minimal terdiri dari 8 karakter"
-            }
-
             if (password.isEmpty()) {
                 isInvalidFields = true
                 edtPass.error = "Password tidak boleh kosong"
@@ -130,6 +128,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
+        val appLogo = ObjectAnimator.ofFloat(binding.appLogo, View.ALPHA, 1f).setDuration(500)
+        val tvLogin = ObjectAnimator.ofFloat(binding.tvLogin, View.ALPHA, 1f).setDuration(500)
         val edtUsername =
             ObjectAnimator.ofFloat(binding.edtUsernameH, View.ALPHA, 1f).setDuration(500)
         val edtPass = ObjectAnimator.ofFloat(binding.edtPassH, View.ALPHA, 1f).setDuration(500)
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         AnimatorSet().apply {
-            playSequentially(edtUsername, edtPass, forgetPass, btnLogin, register)
+            playSequentially(appLogo, tvLogin, edtUsername, edtPass, forgetPass, btnLogin, register)
             start()
         }
     }

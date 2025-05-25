@@ -1,6 +1,11 @@
 package com.abdl.mydicodingstories.ui
 
-import com.abdl.mydicodingstories.data.remote.response.*
+import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
+import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
+import com.abdl.mydicodingstories.data.remote.response.LoginResponse
+import com.abdl.mydicodingstories.data.remote.response.LoginResult
+import com.abdl.mydicodingstories.data.remote.response.RegisterResponse
+import com.abdl.mydicodingstories.data.remote.response.StoriesResponse
 import retrofit2.Response
 
 object DataDummy {

@@ -2,10 +2,11 @@ package com.abdl.mydicodingstories.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.abdl.mydicodingstories.data.PagingRepository
-import com.abdl.mydicodingstories.data.remote.response.*
+import com.abdl.mydicodingstories.data.remote.response.AddStoryResponse
+import com.abdl.mydicodingstories.data.remote.response.StoriesResponse
 import com.abdl.mydicodingstories.data.remote.service.ApiService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -13,12 +14,15 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.*
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Response
 import java.io.File
@@ -152,12 +156,14 @@ class MainViewModelTest {
     @Test
     fun getErrorMessageTest() {
         val expectedError = "Token maximum age exceeded"
-        val actualError = mainViewModel.getErrorMessage("""
+        val actualError = mainViewModel.getErrorMessage(
+            """
             {
                 "error": true,
                 "message": "Token maximum age exceeded"
             }
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         assertEquals(expectedError, actualError)
     }

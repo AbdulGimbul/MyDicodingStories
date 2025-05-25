@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/tv_item_name"
@@ -51,52 +52,60 @@
         <ImageView
             android:id="@+id/picture_feed"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
+            android:contentDescription="Story image"
             android:scaleType="centerCrop"
-            card_view:layout_constraintBottom_toTopOf="@id/tv_like"
             card_view:layout_constraintEnd_toEndOf="@id/tv_item_story"
             card_view:layout_constraintStart_toStartOf="@id/tv_item_story"
             card_view:layout_constraintTop_toBottomOf="@id/tv_item_story"
             tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tv_like"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_like"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Like"
+            android:textAllCaps="false"
             android:textColor="@color/blue_cyan"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@id/tv_comments"
-            card_view:layout_constraintStart_toStartOf="@id/tv_item_story"
-            card_view:layout_constraintTop_toBottomOf="@id/picture_feed"
-            card_view:layout_constraintVertical_bias="0.0" />
+            card_view:icon="@drawable/baseline_favorite_border_24"
+            card_view:iconTint="@color/blue_cyan"
+            card_view:layout_constraintEnd_toStartOf="@id/btn_comments"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/picture_feed" />
 
-        <TextView
-            android:id="@+id/tv_comments"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_comments"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="Comments"
+            android:textAllCaps="false"
             android:textColor="@color/blue_cyan"
-            card_view:layout_constraintBottom_toBottomOf="@id/tv_like"
-            card_view:layout_constraintEnd_toStartOf="@id/tv_share"
-            card_view:layout_constraintStart_toEndOf="@id/tv_like"
-            card_view:layout_constraintTop_toTopOf="@id/tv_like"
-            card_view:layout_constraintVertical_bias="0.0" />
+            card_view:icon="@drawable/baseline_chat_bubble_outline_24"
+            card_view:iconTint="@color/blue_cyan"
+            card_view:layout_constraintEnd_toEndOf="@id/btn_share"
+            card_view:layout_constraintStart_toEndOf="@id/btn_like"
+            card_view:layout_constraintTop_toTopOf="@id/btn_like" />
 
-        <TextView
-            android:id="@+id/tv_share"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="Share"
+            android:textAllCaps="false"
             android:textColor="@color/blue_cyan"
-            card_view:layout_constraintBottom_toBottomOf="@id/tv_like"
-            card_view:layout_constraintEnd_toEndOf="@id/tv_item_story"
-            card_view:layout_constraintStart_toEndOf="@id/tv_comments"
-            card_view:layout_constraintTop_toTopOf="@id/tv_like"
-            card_view:layout_constraintVertical_bias="0.0" />
+            card_view:icon="@drawable/outline_business_messages_24"
+            card_view:iconTint="@color/blue_cyan"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/btn_comments"
+            card_view:layout_constraintTop_toTopOf="@id/btn_like" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

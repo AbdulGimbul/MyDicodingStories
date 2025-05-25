@@ -1,5 +1,6 @@
 package com.abdl.mydicodingstories.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
@@ -15,8 +16,12 @@ class DetailStoryActivity : AppCompatActivity() {
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val storyItem = intent.getParcelableExtra<ListStoryItem>(EXTRA_STORY)
-
+        val storyItem: ListStoryItem? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(EXTRA_STORY, ListStoryItem::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra(EXTRA_STORY)
+        }
         binding.apply {
             tvTitle.text = storyItem?.name
             tvDescription.text = storyItem?.description

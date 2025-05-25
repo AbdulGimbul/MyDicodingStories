@@ -49,14 +49,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
         }
 
-        Log.d("MainActivity", "cek token : ${session.fetchAuthToken()}")
-
         binding.tvName.text = session.fetchName()
-
         binding.tvUserId.text = session.fetchUserId()
 
         binding.mapStories.setOnClickListener {
-//            Toast.makeText(this, "Fitur belum tersedia", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@MainActivity, MapsStoryActivity::class.java))
         }
 

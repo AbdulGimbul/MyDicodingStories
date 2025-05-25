@@ -6,6 +6,7 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -116,7 +117,14 @@ class AddStoryActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == CAMERA_X_RESULT) {
-            val myFile = it.data?.getSerializableExtra("picture") as File
+            val myFile: File? = it.data?.let { intentData ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intentData.getSerializableExtra("picture", File::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    intentData.getSerializableExtra("picture") as? File
+                }
+            }
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
             getFile = myFile

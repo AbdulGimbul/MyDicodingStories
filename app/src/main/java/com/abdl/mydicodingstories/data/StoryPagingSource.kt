@@ -27,8 +27,6 @@ class StoryPagingSource @Inject constructor(
             val position = params.key ?: INITIAL_PAGE_INDEX
             val responseData = apiService.getStoriesWithPage(position, params.loadSize).listStory
 
-            Log.d("StoryPagingSource", "cek data paging ${responseData}")
-
             LoadResult.Page(
                 data = responseData,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
