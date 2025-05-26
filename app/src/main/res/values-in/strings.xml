@@ -1,16 +1,13 @@
 <resources>
     <string name="app_name">MyDicodingStories</string>
-    <string name="title_activity_login">Masuk</string>
     <string name="title_activity_register">Daftar</string>
     <string name="username">Username</string>
     <string name="story">Cerita</string>
     <string name="writer">Penulis:</string>
     <string name="description">Deskripsi:</string>
-    <string name="camera_x">CameraX</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
     <string name="upload">Unggah</string>
-    <string name="title_activity_maps_story">Peta Cerita</string>
     <string name="normal_type">Tipe Normal</string>
     <string name="hybrid_type">Tipe Hibrida</string>
 
@@ -23,27 +20,6 @@
     <string name="story_map_menu">Peta Cerita</string>
     <string name="profile_feature_unavailable">Fitur profil belum tersedia.</string>
     <string name="logout">Keluar</string>
-    <string name="email_hint">Masukkan email</string>
-    <string name="password_hint">Masukkan kata sandi</string>
-    <string name="forgot_password">Lupa Kata Sandi?</string>
-    <string name="login_button">Masuk</string>
-    <string name="no_account_register">Belum punya akun? Daftar di sini!</string>
-    <string name="contact_admin_snackbar">Silakan hubungi admin!</string>
-    <string name="ok">Ok</string>
-    <string name="login_successful">Berhasil masuk!</string>
-    <string name="login_failed">Gagal masuk!</string>
-    <string name="user_not_found">Pengguna tidak ditemukan!</string>
-    <string name="invalid_password_error">Kata sandi salah!</string>
-    <string name="registration_successful">Pendaftaran berhasil!</string>
-    <string name="email_must_be_valid">Email harus valid!</string>
-    <string name="registration_failed">Pendaftaran gagal!</string>
-    <string name="name_empty_error">Nama tidak boleh kosong</string>
-    <string name="email_empty_error">Email tidak boleh kosong</string>
-    <string name="email_invalid_error">Format email tidak valid</string>
-    <string name="password_empty_error">Kata sandi tidak boleh kosong</string>
-    <string name="password_min_length_error">Kata sandi minimal 8 karakter</string>
-    <string name="password_mismatch_error">Kata sandi tidak cocok</string>
-    <string name="repeat_password_empty_error">Ulangi kata sandi tidak boleh kosong</string>
     <string name="add_new_story_title">Tambah Cerita Baru</string>
     <string name="take_story_picture_from">Ambil foto cerita Anda dari:</string>
     <string name="add_story_description_hint">Ceritakan kisahmu di sini..</string>

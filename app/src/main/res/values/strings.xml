@@ -28,6 +28,7 @@
     <string name="image_captured_successfully">Image captured successfully.</string>
     <string name="description_empty_error_toast">Sorry, description cannot be empty!</string>
     <string name="image_too_large_error_toast">Image file is too large. Max 1MB.</string>
+    <string name="story_uploaded_successfully">Story created successfully.</string>
     <string name="please_select_image_first">Please select an image file first.</string>
     <string name="story_detail_title">Story Detail</string>
     <string name="created_at_label">Created at:</string>

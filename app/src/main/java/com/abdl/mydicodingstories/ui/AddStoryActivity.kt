@@ -162,7 +162,7 @@ class AddStoryActivity : BaseActivity() {
 
             mainViewModel.postStoryResponse.observe(this) { responseBody ->
                 if (responseBody != null && !responseBody.error) {
-                    Toast.makeText(this@AddStoryActivity, responseBody.message, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AddStoryActivity, R.string.story_uploaded_successfully, Toast.LENGTH_SHORT)
                         .show()
                     Intent(this@AddStoryActivity, MainActivity::class.java).also {
                         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
