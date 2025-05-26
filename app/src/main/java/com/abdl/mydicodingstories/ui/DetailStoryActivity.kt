@@ -2,7 +2,6 @@ package com.abdl.mydicodingstories.ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.databinding.ActivityDetailStoryBinding
@@ -28,7 +27,13 @@ class DetailStoryActivity : BaseActivity() {
             tvTitle.text = storyItem?.name
             tvDescription.text = storyItem?.description
             createdAt.text =
-                "${getString(R.string.created_at_label)} ${storyItem?.createdAt?.let { DateFormatter.formatDate(it) }}"
+                "${getString(R.string.created_at_label)} ${
+                    storyItem?.createdAt?.let {
+                        DateFormatter.formatDate(
+                            it
+                        )
+                    }
+                }"
 
             Glide.with(this@DetailStoryActivity)
                 .load(storyItem?.photoUrl)

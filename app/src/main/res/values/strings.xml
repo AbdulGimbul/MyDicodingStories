@@ -1,16 +1,13 @@
 <resources>
     <string name="app_name">MyDicodingStories</string>
-    <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
     <string name="username">Username</string>
     <string name="story">Story</string>
     <string name="writer">Writer:</string>
     <string name="description">Description:</string>
-    <string name="camera_x">CameraX</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="upload">Upload</string>
-    <string name="title_activity_maps_story">Story Map</string>
     <string name="normal_type">Normal Type</string>
     <string name="hybrid_type">Hybrid Type</string>
 
@@ -23,27 +20,6 @@
     <string name="story_map_menu">Story Map</string>
     <string name="profile_feature_unavailable">Profile feature is not yet available.</string>
     <string name="logout">Logout</string>
-    <string name="email_hint">Enter email</string>
-    <string name="password_hint">Enter password</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="login_button">Login</string>
-    <string name="no_account_register">Don\'t have an account? Register here!</string>
-    <string name="contact_admin_snackbar">Please contact admin!</string>
-    <string name="ok">Ok</string>
-    <string name="login_successful">Login successful!</string>
-    <string name="login_failed">Login failed!</string>
-    <string name="user_not_found">User not found!</string>
-    <string name="invalid_password_error">Incorrect password!</string>
-    <string name="registration_successful">Registration successful!</string>
-    <string name="email_must_be_valid">Email must be valid!</string>
-    <string name="registration_failed">Registration failed!</string>
-    <string name="name_empty_error">Name cannot be empty</string>
-    <string name="email_empty_error">Email cannot be empty</string>
-    <string name="email_invalid_error">Invalid email format</string>
-    <string name="password_empty_error">Password cannot be empty</string>
-    <string name="password_min_length_error">Password must be at least 8 characters</string>
-    <string name="password_mismatch_error">Passwords do not match</string>
-    <string name="repeat_password_empty_error">Repeat password cannot be empty</string>
     <string name="add_new_story_title">Add New Story</string>
     <string name="take_story_picture_from">Take your story picture from:</string>
     <string name="add_story_description_hint">Tell your story here..</string>
@@ -52,7 +28,6 @@
     <string name="image_captured_successfully">Image captured successfully.</string>
     <string name="description_empty_error_toast">Sorry, description cannot be empty!</string>
     <string name="image_too_large_error_toast">Image file is too large. Max 1MB.</string>
-    <string name="story_uploaded_successfully">Story uploaded successfully</string>
     <string name="please_select_image_first">Please select an image file first.</string>
     <string name="story_detail_title">Story Detail</string>
     <string name="created_at_label">Created at:</string>
@@ -61,13 +36,9 @@
     <string name="comments_feature_unavailable">Comment feature is not yet available</string>
     <string name="share_feature_unavailable">Share feature is not yet available</string>
     <string name="change_language">Change Language</string>
-    <string name="retry">Retry</string>
-    <string name="timeout">Timeout</string>
     <string name="loading_stories">Loading stories...</string>
     <string name="no_stories_to_display">No stories to display.</string>
     <string name="latest_stories">Latest Stories</string>
-    <string name="opening_story">Opening story: %1$s</string>
-    <string name="error_could_not_open_story">Error: Could not open story.</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>

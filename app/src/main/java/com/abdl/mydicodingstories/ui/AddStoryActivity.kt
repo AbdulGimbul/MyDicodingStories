@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.abdl.mydicodingstories.R
@@ -61,7 +60,8 @@ class AddStoryActivity : BaseActivity() {
 
         mainViewModel.errorMessage.observe(this) {
             if (it == "Error : \"description\" is not allowed to be empty") {
-                Toast.makeText(this, R.string.description_empty_error_toast, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.description_empty_error_toast, Toast.LENGTH_SHORT)
+                    .show()
             } else if (it == "Error : Payload content length greater than maximum allowed: 1000000") {
                 Toast.makeText(this, R.string.image_too_large_error_toast, Toast.LENGTH_LONG)
                     .show()

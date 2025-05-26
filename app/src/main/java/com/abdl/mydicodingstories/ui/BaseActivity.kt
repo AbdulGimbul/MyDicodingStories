@@ -16,8 +16,8 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var sessionManager: SessionManager
 
     override fun attachBaseContext(newBase: Context) {
-        val tempSessionManager = SessionManager(newBase) // For early access
-        val languageCode = tempSessionManager.fetchLanguage() // This will now default to "in"
+        val tempSessionManager = SessionManager(newBase)
+        val languageCode = tempSessionManager.fetchLanguage()
         val localeToSet = Locale(languageCode)
         super.attachBaseContext(updateBaseContextLocale(newBase, localeToSet))
     }
@@ -31,28 +31,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // No explicit call to applySelectedAppLocale needed here for initial setup
-        // as attachBaseContext should handle it.
     }
 
     protected fun setLocaleAndRecreate(languageCode: String) {
         sessionManager.saveLanguage(languageCode)
-        // The rest of this method remains the same, BaseActivity will be recreated,
-        // and attachBaseContext will pick up the newly saved language.
         recreate()
     }
-
-    // This function can be simplified or removed if BaseActivity's attachBaseContext
-    // and MyApplication's onConfigurationChanged handle all cases.
-    // For now, let's assume BaseActivity handles its own context correctly.
-    /*
-    fun applySelectedAppLocale(context: Context) {
-        val languageCode = sessionManager.fetchLanguage()
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
-        val config = context.resources.configuration
-        config.setLocale(locale)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
-    }
-    */
 }
