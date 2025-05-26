@@ -3,13 +3,15 @@ package com.abdl.mydicodingstories.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.adapter.ItemStoryAdapter
 import com.abdl.mydicodingstories.adapter.LoadingStateAdapter
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
@@ -20,7 +22,7 @@ import com.abdl.mydicodingstories.utils.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var rvAdapter: ItemStoryAdapter
     private lateinit var session: SessionManager
@@ -78,6 +80,48 @@ class MainActivity : AppCompatActivity() {
         showStoryList()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_change_language -> {
+                showLanguageSelectionDialog()
+                true
+            }
+
+            else -> {
+                return false
+            }
+        }
+    }
+
+    private fun showLanguageSelectionDialog() {
+        val languages = arrayOf("English", "Indonesia")
+        val languageCodes = arrayOf("en", "in")
+
+        val currentLanguageCode = sessionManager.fetchLanguage()
+        var checkedItem = languageCodes.indexOf(currentLanguageCode)
+        if (checkedItem == -1) {
+            checkedItem =
+                languageCodes.indexOf(SessionManager.DEFAULT_LANGUAGE_CODE)
+        }
+
+
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.change_language))
+            .setSingleChoiceItems(languages, checkedItem) { dialog, which ->
+                setLocaleAndRecreate(languageCodes[which])
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     private fun showStoryList() {
         binding.apply {
             rvFeed.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -104,21 +148,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLogoutDialog() {
-        val dialogTitle = "Yakin?"
-        val dialogMessage = "Apakah anda yakin akan melakukan logout?"
+        val dialogTitle = R.string.logout_confirmation_title
+        val dialogMessage = R.string.logout_confirmation_message
 
         val alertDialogBuilder = AlertDialog.Builder(this)
         with(alertDialogBuilder) {
             setTitle(dialogTitle)
             setMessage(dialogMessage)
             setCancelable(false)
-            setPositiveButton("Ya") { _, _ ->
+            setPositiveButton(R.string.yes) { _, _ ->
                 val onLogout = Intent(this@MainActivity, LoginActivity::class.java)
                 onLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 onLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
                 session.deleteAuthToken()
-                Log.d("MainActivity", "cek token : ${session.fetchAuthToken()}")
                 onLogout.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(
                     onLogout,
@@ -126,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 finish()
             }
-            setNegativeButton("Tidak") { dialog, _ ->
+            setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.cancel()
             }
         }

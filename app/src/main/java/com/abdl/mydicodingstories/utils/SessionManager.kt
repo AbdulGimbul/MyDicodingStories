@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import androidx.core.content.edit
 
 class SessionManager @Inject constructor(
     @ApplicationContext context: Context,
@@ -15,6 +16,8 @@ class SessionManager @Inject constructor(
         const val USER_TOKEN = "user_token"
         const val NAME = "name"
         const val USER_ID = "user_id"
+        const val SELECTED_LANGUAGE = "selected_language"
+        const val DEFAULT_LANGUAGE_CODE = "in"
     }
 
     fun saveAuthToken(token: String, name: String, userId: String) {
@@ -41,5 +44,15 @@ class SessionManager @Inject constructor(
 
     fun deleteAuthToken(): Boolean {
         return prefs?.edit()?.clear()!!.commit()
+    }
+
+    fun saveLanguage(language: String) {
+        prefs?.edit {
+            putString(SELECTED_LANGUAGE, language)
+        }
+    }
+
+    fun fetchLanguage(): String? {
+        return prefs?.getString(SELECTED_LANGUAGE, DEFAULT_LANGUAGE_CODE) ?: DEFAULT_LANGUAGE_CODE
     }
 }

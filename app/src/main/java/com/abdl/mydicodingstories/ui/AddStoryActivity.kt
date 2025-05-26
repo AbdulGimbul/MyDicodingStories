@@ -16,6 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.databinding.ActivityAddStoryBinding
 import com.abdl.mydicodingstories.utils.rotateBitmap
 import com.abdl.mydicodingstories.utils.uriToFile
@@ -30,7 +31,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 @AndroidEntryPoint
-class AddStoryActivity : AppCompatActivity() {
+class AddStoryActivity : BaseActivity() {
     private lateinit var binding: ActivityAddStoryBinding
     private val mainViewModel: MainViewModel by viewModels()
     private var getFile: File? = null
@@ -39,6 +40,8 @@ class AddStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        title = getString(R.string.add_story)
 
         if (!allPermissionGranted()) {
             ActivityCompat.requestPermissions(
@@ -58,9 +61,9 @@ class AddStoryActivity : AppCompatActivity() {
 
         mainViewModel.errorMessage.observe(this) {
             if (it == "Error : \"description\" is not allowed to be empty") {
-                Toast.makeText(this, "Maaf, deskripsi harus diisi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.description_empty_error_toast, Toast.LENGTH_SHORT).show()
             } else if (it == "Error : Payload content length greater than maximum allowed: 1000000") {
-                Toast.makeText(this, "File gambar terlalu besar. Maksimal 1MB", Toast.LENGTH_LONG)
+                Toast.makeText(this, R.string.image_too_large_error_toast, Toast.LENGTH_LONG)
                     .show()
             }
         }
@@ -80,7 +83,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (!allPermissionGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan perizinan.",
+                    R.string.permission_not_granted,
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -170,7 +173,7 @@ class AddStoryActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this@AddStoryActivity,
-                "Silahkan masukkan berkas gambar terlebih dahulu",
+                R.string.please_select_image_first,
                 Toast.LENGTH_SHORT
             )
                 .show()

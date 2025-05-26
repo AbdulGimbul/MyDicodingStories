@@ -74,7 +74,7 @@ class StoryWidgetItemFactory(
 
     override fun getLoadingView(): RemoteViews? {
         return RemoteViews(applicationContext.packageName, R.layout.item_loading).apply {
-            setTextViewText(R.id.error_msg, "Loading stories...")
+            setTextViewText(R.id.error_msg, applicationContext.getString(R.string.loading_stories))
         }
     }
 

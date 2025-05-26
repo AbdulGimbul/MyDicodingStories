@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
-import javax.inject.Inject // Import for field injection
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapsStoryActivity : AppCompatActivity(), OnMapReadyCallback {

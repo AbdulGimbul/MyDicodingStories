@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.data.remote.response.ListStoryItem
 import com.abdl.mydicodingstories.databinding.ItemStoryBinding
 import com.bumptech.glide.Glide
@@ -48,7 +49,7 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
                 btnLike.setOnClickListener {
                     Toast.makeText(
                         itemView.context,
-                        "Fitur Like belum tersedia",
+                        R.string.like_feature_unavailable,
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -56,7 +57,7 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
                 btnComments.setOnClickListener {
                     Toast.makeText(
                         itemView.context,
-                        "Fitur Komentar belum tersedia",
+                        R.string.comments_feature_unavailable,
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -64,7 +65,7 @@ class ItemStoryAdapter : PagingDataAdapter<ListStoryItem, ItemStoryAdapter.ItemV
                 btnShare.setOnClickListener {
                     Toast.makeText(
                         itemView.context,
-                        "Fitur Share belum tersedia",
+                        R.string.share_feature_unavailable,
                         Toast.LENGTH_SHORT
                     )
                         .show()

@@ -13,10 +13,11 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.databinding.ActivityCameraBinding
 import com.abdl.mydicodingstories.utils.createFile
 
-class CameraActivity : AppCompatActivity() {
+class CameraActivity : BaseActivity() {
     private lateinit var binding: ActivityCameraBinding
 
     private var imgCapture: ImageCapture? = null
@@ -56,7 +57,7 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        R.string.failed_to_capture_image,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -64,7 +65,7 @@ class CameraActivity : AppCompatActivity() {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Berhasil mengambil gambar.",
+                        R.string.image_captured_successfully,
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -105,7 +106,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal membuka kamera.",
+                    R.string.failed_to_capture_image,
                     Toast.LENGTH_SHORT
                 ).show()
             }

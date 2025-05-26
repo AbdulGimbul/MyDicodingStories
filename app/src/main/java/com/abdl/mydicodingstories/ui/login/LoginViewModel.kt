@@ -61,7 +61,6 @@ class LoginViewModel @Inject constructor(
                     _isLoading.value = false
                     val error = response.errorBody()?.string()
                     onError("Error : ${error?.let { getErrorMessage(it) }}")
-                    Log.d("LoginViewModel", "cekkk : ${error}}")
                 }
             }
         }

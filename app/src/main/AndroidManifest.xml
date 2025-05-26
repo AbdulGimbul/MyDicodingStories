@@ -32,7 +32,7 @@
         <activity
             android:name=".ui.maps.MapsStoryActivity"
             android:exported="false"
-            android:label="Peta Lokasi Cerita"
+            android:label="@string/story_location_map_title"
             android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.CameraActivity"
@@ -44,6 +44,7 @@
         <activity
             android:name=".ui.AddStoryActivity"
             android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.app.lib_name"
@@ -52,7 +53,6 @@
         <activity
             android:name=".ui.DetailStoryActivity"
             android:exported="false"
-            android:label="Detail Story"
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
@@ -61,7 +61,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
-            android:label="Stories" />
+            android:label="MyDicodingStories" />
         <activity
             android:name=".ui.login.RegisterActivity"
             android:exported="false"
