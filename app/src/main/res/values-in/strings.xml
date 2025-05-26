@@ -2,7 +2,7 @@
     <string name="app_name">MyDicodingStories</string>
     <string name="title_activity_login">Masuk</string>
     <string name="title_activity_register">Daftar</string>
-    <string name="account_name">Nama Akun</string>
+    <string name="username">Username</string>
     <string name="story">Cerita</string>
     <string name="writer">Penulis:</string>
     <string name="description">Deskripsi:</string>

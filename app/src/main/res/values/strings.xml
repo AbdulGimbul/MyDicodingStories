@@ -2,7 +2,7 @@
     <string name="app_name">MyDicodingStories</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
-    <string name="account_name">Account Name</string>
+    <string name="username">Username</string>
     <string name="story">Story</string>
     <string name="writer">Writer:</string>
     <string name="description">Description:</string>
