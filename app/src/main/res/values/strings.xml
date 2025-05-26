@@ -14,4 +14,6 @@
     <string name="pindah_kamera">Pindah kamera</string>
     <string name="logout">Logout</string>
     <string name="tombol_profil">Tombol profil</string>
+    <string name="latest_stories">Cerita Terbaru</string>
+    <string name="no_stories_to_display">Pastikan login terlebih dahulu sebelum menambahkan widget ini.</string>
 </resources>

@@ -75,6 +75,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".ui.widget.StoryStackWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.abdl.mydicodingstories.ACTION_ITEM_CLICK" />
+                <action android:name="com.abdl.mydicodingstories.ACTION_REFRESH_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/story_stack_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".ui.widget.StoryWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
