@@ -37,13 +37,9 @@
     <string name="comments_feature_unavailable">Fitur Komentar belum tersedia</string>
     <string name="share_feature_unavailable">Fitur Bagikan belum tersedia</string>
     <string name="change_language">Ubah Bahasa</string>
-    <string name="retry">Coba Lagi</string>
-    <string name="timeout">Waktu Habis</string>
     <string name="loading_stories">Memuat cerita...</string>
-    <string name="no_stories_to_display">Tidak ada cerita untuk ditampilkan.</string>
+    <string name="no_stories_to_display">Pastikan login terlebih dahulu sebelum menambahkan widget ini.</string>
     <string name="latest_stories">Cerita Terbaru</string>
-    <string name="opening_story">Membuka cerita: %1$s</string>
-    <string name="error_could_not_open_story">Error: Tidak dapat membuka cerita.</string>
     <string name="like">Suka</string>
     <string name="comment">Komentar</string>
     <string name="share">Bagikan</string>

@@ -38,7 +38,7 @@
     <string name="share_feature_unavailable">Share feature is not yet available</string>
     <string name="change_language">Change Language</string>
     <string name="loading_stories">Loading stories...</string>
-    <string name="no_stories_to_display">No stories to display.</string>
+    <string name="no_stories_to_display">Make sure you login first before add this widget.</string>
     <string name="latest_stories">Latest Stories</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
