@@ -13,7 +13,7 @@ import com.abdl.mydicodingstories.R
 
 class CustomEdittext : AppCompatEditText, View.OnTouchListener {
 
-    private lateinit var edtPass: EditText
+    private var edtPass: EditText? = null
 
     constructor(context: Context) : super(context) {
         init()
@@ -48,7 +48,7 @@ class CustomEdittext : AppCompatEditText, View.OnTouchListener {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0?.length!! < 8) {
-                    edtPass.error = "Minimal 8 karakter"
+                    edtPass?.error = "Minimal 8 karakter"
                 }
             }
 

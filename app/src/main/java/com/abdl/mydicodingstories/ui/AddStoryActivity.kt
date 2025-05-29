@@ -15,6 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.databinding.ActivityAddStoryBinding
 import com.abdl.mydicodingstories.utils.rotateBitmap
@@ -41,6 +44,17 @@ class AddStoryActivity : BaseActivity() {
         setContentView(binding.root)
 
         title = getString(R.string.add_story)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.root.updatePadding(
+                left = insets.left,
+                top = insets.top,
+                right = insets.right,
+                bottom = insets.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
 
         if (!allPermissionGranted()) {
             ActivityCompat.requestPermissions(
