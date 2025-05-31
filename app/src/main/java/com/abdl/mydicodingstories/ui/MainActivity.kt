@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdl.mydicodingstories.R
 import com.abdl.mydicodingstories.adapter.ItemStoryAdapter
@@ -40,14 +38,7 @@ class MainActivity : BaseActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            (binding.view.layoutParams as ViewGroup.MarginLayoutParams).topMargin = insets.top
-            binding.view.requestLayout()
-
-            binding.view.updatePadding(bottom = insets.bottom)
-
-            view.updatePadding(left = insets.left, right = insets.right)
-
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
 
