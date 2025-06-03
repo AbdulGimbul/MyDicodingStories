@@ -43,4 +43,7 @@
     <string name="like">Suka</string>
     <string name="comment">Komentar</string>
     <string name="share">Bagikan</string>
+    <string name="image_too_large_to_process_toast">Gambar terlalu besar untuk diproses. Silakan pilih gambar yang lebih kecil.</string>
+    <string name="failed_to_decode_image_toast">Gagal memproses gambar. Silakan pilih file gambar yang valid.</string>
+    <string name="could_not_compress_toast">Tidak dapat mengompres gambar di bawah 1MB. Unggahan mungkin ditolak oleh server.</string>
 </resources>

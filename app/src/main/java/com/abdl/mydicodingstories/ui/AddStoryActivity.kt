@@ -28,6 +28,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -199,28 +200,67 @@ class AddStoryActivity : BaseActivity() {
     }
 
     private fun reduceFileImage(file: File): File {
+        val MAX_FILE_SIZE_BYTES = 1 * 1024 * 1024
+
+        if (file.length() <= MAX_FILE_SIZE_BYTES) {
+            return file
+        }
+
+        var bitmap: Bitmap? = null
         try {
-            val bitmap = BitmapFactory.decodeFile(file.path)
+            bitmap = BitmapFactory.decodeFile(file.path)
+            if (bitmap == null) {
+                Toast.makeText(this, R.string.failed_to_decode_image_toast, Toast.LENGTH_SHORT).show()
+                return file
+            }
 
-            val outputDir = file.parentFile ?: return file
-            val outputFile = File(outputDir, "compressed_${file.name}")
+            var quality = 90
+            val minQuality = 10
+            val step = 5
 
-            FileOutputStream(outputFile).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+            val outputDir = cacheDir
+            val outputFile = File(outputDir, "compressed_${System.currentTimeMillis()}_${file.name}")
+
+            val byteArrayOutputStream = ByteArrayOutputStream()
+
+            while (quality >= minQuality) {
+                byteArrayOutputStream.reset()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream)
+                val compressedSize = byteArrayOutputStream.size()
+
+                if (compressedSize <= MAX_FILE_SIZE_BYTES) {
+                    FileOutputStream(outputFile).use { fos ->
+                        fos.write(byteArrayOutputStream.toByteArray())
+                    }
+                    return outputFile
+                }
+                quality -= step
+            }
+
+            FileOutputStream(outputFile).use { fos ->
+                fos.write(byteArrayOutputStream.toByteArray())
+            }
+
+            if (outputFile.length() > MAX_FILE_SIZE_BYTES) {
+                Toast.makeText(this, R.string.could_not_compress_toast, Toast.LENGTH_LONG).show()
             }
             return outputFile
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return file
+
         } catch (e: OutOfMemoryError) {
             e.printStackTrace()
+            Toast.makeText(this, R.string.image_too_large_to_process_toast, Toast.LENGTH_LONG).show()
             return file
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error processing image: ${e.message}", Toast.LENGTH_SHORT).show()
+            return file
+        } finally {
+            bitmap?.recycle()
         }
     }
 
     companion object {
         const val CAMERA_X_RESULT = 200
-
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
