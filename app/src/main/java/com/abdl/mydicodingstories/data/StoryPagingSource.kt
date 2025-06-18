@@ -10,10 +10,6 @@ class StoryPagingSource @Inject constructor(
     private val apiService: ApiService,
 ) : PagingSource<Int, ListStoryItem>() {
 
-    private companion object {
-        const val INITIAL_PAGE_INDEX = 1
-    }
-
     override fun getRefreshKey(state: PagingState<Int, ListStoryItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -34,5 +30,9 @@ class StoryPagingSource @Inject constructor(
         } catch (e: Exception) {
             return LoadResult.Error(e)
         }
+    }
+
+    private companion object {
+        const val INITIAL_PAGE_INDEX = 1
     }
 }

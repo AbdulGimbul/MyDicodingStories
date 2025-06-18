@@ -210,7 +210,8 @@ class AddStoryActivity : BaseActivity() {
         try {
             bitmap = BitmapFactory.decodeFile(file.path)
             if (bitmap == null) {
-                Toast.makeText(this, R.string.failed_to_decode_image_toast, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.failed_to_decode_image_toast, Toast.LENGTH_SHORT)
+                    .show()
                 return file
             }
 
@@ -219,7 +220,8 @@ class AddStoryActivity : BaseActivity() {
             val step = 5
 
             val outputDir = cacheDir
-            val outputFile = File(outputDir, "compressed_${System.currentTimeMillis()}_${file.name}")
+            val outputFile =
+                File(outputDir, "compressed_${System.currentTimeMillis()}_${file.name}")
 
             val byteArrayOutputStream = ByteArrayOutputStream()
 
@@ -248,7 +250,8 @@ class AddStoryActivity : BaseActivity() {
 
         } catch (e: OutOfMemoryError) {
             e.printStackTrace()
-            Toast.makeText(this, R.string.image_too_large_to_process_toast, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.image_too_large_to_process_toast, Toast.LENGTH_LONG)
+                .show()
             return file
         } catch (e: IOException) {
             e.printStackTrace()
