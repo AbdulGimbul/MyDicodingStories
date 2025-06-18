@@ -29,6 +29,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import retrofit2.Response
 import java.util.concurrent.TimeoutException
 

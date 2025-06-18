@@ -57,8 +57,28 @@ class PagingViewModelTest {
         assertNotNull(differ.snapshot())
         assertEquals(dummyStory, differ.snapshot())
         assertEquals(dummyStory.size, differ.snapshot().size)
-        assertEquals(dummyStory[0].id, differ.snapshot()[0]?.id)
+        assertEquals(dummyStory[0], differ.snapshot()[0])
+    }
 
+    @Test
+    fun `when GetStoriesWithPagination is empty and should return zero`() = runTest {
+        val dummyStory = emptyList<ListStoryItem>()
+        val data: PagingData<ListStoryItem> = StoryPagingSource.snapshot(dummyStory)
+        val expectedStory = MutableLiveData<PagingData<ListStoryItem>>()
+        expectedStory.value = data
+        Mockito.`when`(repository.getStoryPaging()).thenReturn(expectedStory)
+
+        val viewModel = PagingViewModel(repository)
+        val actualStory: PagingData<ListStoryItem> = viewModel.getStoryWithPage.getOrAwaitValue()
+
+        val differ = AsyncPagingDataDiffer(
+            diffCallback = ItemStoryAdapter.DIFF_CALLBACK,
+            updateCallback = noopListUpdateCallback,
+            workerDispatcher = Dispatchers.Main
+        )
+        differ.submitData(actualStory)
+
+        assertEquals(0, differ.snapshot().size)
     }
 
     class StoryPagingSource : PagingSource<Int, LiveData<List<ListStoryItem>>>() {
